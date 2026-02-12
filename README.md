@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+# DevToolkit
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Free, fast, and private developer tools. No ads, no tracking — everything runs in your browser.
 
-Currently, two official plugins are available:
+**[devtoolkit-dws.pages.dev](https://devtoolkit-dws.pages.dev)**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tools
 
-## React Compiler
+| Tool | Description |
+|------|-------------|
+| [JSON Formatter](https://devtoolkit-dws.pages.dev/tools/json-formatter) | Format, validate, and minify JSON with syntax highlighting |
+| [Base64 Encoder/Decoder](https://devtoolkit-dws.pages.dev/tools/base64) | Encode and decode Base64 strings |
+| [Cron Expression Parser](https://devtoolkit-dws.pages.dev/tools/cron-parser) | Parse and explain cron expressions with next run times |
+| [JWT Decoder](https://devtoolkit-dws.pages.dev/tools/jwt-decoder) | Decode and inspect JSON Web Tokens |
+| [URL Encoder/Decoder](https://devtoolkit-dws.pages.dev/tools/url-encoder) | Encode and decode URL components |
+| [UUID Generator](https://devtoolkit-dws.pages.dev/tools/uuid-generator) | Generate v4 UUIDs in bulk |
+| [Timestamp Converter](https://devtoolkit-dws.pages.dev/tools/timestamp-converter) | Convert between Unix timestamps and human-readable dates |
+| [Hash Generator](https://devtoolkit-dws.pages.dev/tools/hash-generator) | Generate MD5, SHA-1, SHA-256, SHA-512 hashes |
+| [Password Generator](https://devtoolkit-dws.pages.dev/tools/password-generator) | Generate secure passwords with customizable rules |
+| [Text Diff Checker](https://devtoolkit-dws.pages.dev/tools/diff-checker) | Compare two texts side-by-side with highlighted differences |
+| [Regex Tester](https://devtoolkit-dws.pages.dev/tools/regex-tester) | Test regular expressions with real-time matching and flag controls |
+| [Color Converter](https://devtoolkit-dws.pages.dev/tools/color-converter) | Convert between HEX, RGB, HSL with WCAG contrast checking |
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- **100% Client-Side** — Nothing leaves your browser. Zero server-side processing.
+- **No Ads, No Tracking** — No analytics, no cookies, no third-party scripts.
+- **Fast** — Static pre-rendered pages. No loading spinners.
+- **12 Tools** — And growing.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- [React 19](https://react.dev/) + [TypeScript 5.9](https://www.typescriptlang.org/)
+- [Vite 7](https://vite.dev/) + [Tailwind CSS 4](https://tailwindcss.com/)
+- [Cloudflare Pages](https://pages.cloudflare.com/) (hosting)
+- Pre-rendered static HTML for SEO
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Development
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Build
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run build    # TypeScript check + Vite build + sitemap + prerender
+npm run preview  # Preview production build locally
 ```
+
+## License
+
+MIT
