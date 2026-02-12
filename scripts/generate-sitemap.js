@@ -4,7 +4,8 @@ import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const BASE_URL = 'https://devtoolkit.pro'
+// TODO: Change to custom domain once bound
+const BASE_URL = 'https://devtoolkit-dws.pages.dev'
 
 const pages = [
   { path: '/', priority: '1.0', changefreq: 'weekly' },
@@ -13,6 +14,9 @@ const pages = [
   { path: '/tools/cron-parser', priority: '0.9', changefreq: 'monthly' },
   { path: '/tools/jwt-decoder', priority: '0.9', changefreq: 'monthly' },
   { path: '/tools/url-encoder', priority: '0.9', changefreq: 'monthly' },
+  { path: '/tools/uuid-generator', priority: '0.9', changefreq: 'monthly' },
+  { path: '/tools/timestamp-converter', priority: '0.9', changefreq: 'monthly' },
+  { path: '/tools/hash-generator', priority: '0.9', changefreq: 'monthly' },
   { path: '/api', priority: '0.8', changefreq: 'weekly' },
 ]
 

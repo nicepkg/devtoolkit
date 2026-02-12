@@ -1,15 +1,19 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 interface SeoProps {
   title: string
   description: string
   path?: string
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[]
 }
 
-const BASE_URL = 'https://devtoolkit.pro'
+// TODO: Change to custom domain once bound
+const BASE_URL = 'https://devtoolkit-dws.pages.dev'
 const SITE_NAME = 'DevToolkit'
 
-export function useSeo({ title, description, path = '' }: SeoProps) {
+export function useSeo({ title, description, path = '', jsonLd }: SeoProps) {
+  const jsonLdString = useMemo(() => jsonLd ? JSON.stringify(jsonLd) : null, [jsonLd])
+
   useEffect(() => {
     const fullTitle = `${title} — ${SITE_NAME}`
     document.title = fullTitle
@@ -47,5 +51,61 @@ export function useSeo({ title, description, path = '' }: SeoProps) {
       }
       meta.setAttribute('content', content)
     }
-  }, [title, description, path])
+
+    // JSON-LD structured data
+    if (jsonLdString) {
+      const existingScript = document.querySelector('script[data-seo-jsonld]')
+      if (existingScript) existingScript.remove()
+
+      const script = document.createElement('script')
+      script.setAttribute('type', 'application/ld+json')
+      script.setAttribute('data-seo-jsonld', '')
+      script.textContent = jsonLdString
+      document.head.appendChild(script)
+
+      return () => {
+        script.remove()
+      }
+    }
+  }, [title, description, path, jsonLdString])
+}
+
+// Helper: create WebApplication schema for tool pages
+export function toolJsonLd(opts: {
+  name: string
+  description: string
+  path: string
+  category: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: opts.name,
+    description: opts.description,
+    url: `${BASE_URL}${opts.path}`,
+    applicationCategory: opts.category,
+    operatingSystem: 'Any',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    browserRequirements: 'Requires JavaScript. Works in all modern browsers.',
+  }
+}
+
+// Helper: create FAQPage schema
+export function faqJsonLd(faqs: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  }
 }

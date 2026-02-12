@@ -1,13 +1,29 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import ToolLayout from '@/components/ToolLayout'
 import CopyButton from '@/components/CopyButton'
-import { useSeo } from '@/hooks/useSeo'
+import RelatedTools from '@/components/RelatedTools'
+import { useSeo, toolJsonLd, faqJsonLd } from '@/hooks/useSeo'
 
 export default function Base64() {
+  const jsonLd = useMemo(() => [
+    toolJsonLd({
+      name: 'Base64 Encoder/Decoder',
+      description: 'Free online Base64 encoder and decoder with UTF-8 support.',
+      path: '/tools/base64',
+      category: 'DeveloperApplication',
+    }),
+    faqJsonLd([
+      { question: 'What is Base64 encoding?', answer: 'Base64 is a binary-to-text encoding scheme that represents binary data in an ASCII string format. It is commonly used to embed images in HTML/CSS, encode email attachments, and transmit binary data over text-based protocols.' },
+      { question: 'Is Base64 encoding reversible?', answer: 'Yes, Base64 encoding is fully reversible. You can encode text to Base64 and decode it back to the original text without any data loss.' },
+      { question: 'Does this tool support UTF-8?', answer: 'Yes, this Base64 encoder/decoder fully supports UTF-8 characters including international characters, emojis, and multi-byte sequences.' },
+    ]),
+  ], [])
+
   useSeo({
     title: 'Base64 Encoder/Decoder',
     description: 'Free online Base64 encoder and decoder with UTF-8 support. Convert text to Base64 and back instantly. No ads, no tracking.',
     path: '/tools/base64',
+    jsonLd,
   })
   const [input, setInput] = useState('')
   const [output, setOutput] = useState('')
@@ -55,7 +71,6 @@ export default function Base64() {
       title="Base64 Encoder/Decoder"
       description="Encode text to Base64 or decode Base64 to text. Supports UTF-8."
     >
-      {/* Mode toggle */}
       <div className="flex items-center gap-3 mb-4">
         <div className="flex rounded border border-border overflow-hidden">
           <button
@@ -84,7 +99,7 @@ export default function Base64() {
           className="px-3 py-2 bg-surface-2 hover:bg-surface-3 border border-border rounded text-sm transition-colors"
           title="Swap input and output"
         >
-          ⇄ Swap
+          Swap
         </button>
       </div>
 
@@ -132,7 +147,6 @@ export default function Base64() {
         </div>
       </div>
 
-      {/* Stats */}
       {input && (
         <div className="mt-4 flex gap-6 text-sm text-text-muted">
           <span>Input: {new Blob([input]).size} bytes</span>
@@ -150,6 +164,14 @@ export default function Base64() {
           string format. It's commonly used to embed images in HTML/CSS, encode email attachments
           (MIME), and transmit binary data over text-based protocols.
         </p>
+        <h3 className="font-semibold text-text-primary">Common Use Cases</h3>
+        <ul className="list-disc list-inside space-y-1">
+          <li>Embedding images in HTML/CSS using data URIs</li>
+          <li>Encoding binary data for JSON APIs</li>
+          <li>Email attachments (MIME encoding)</li>
+          <li>Storing binary data in text-based formats like XML</li>
+          <li>Basic authentication headers in HTTP requests</li>
+        </ul>
         <h3 className="font-semibold text-text-primary">Features</h3>
         <ul className="list-disc list-inside space-y-1">
           <li>Full UTF-8 support for international characters</li>
@@ -159,6 +181,8 @@ export default function Base64() {
           <li>100% client-side — your data never leaves your browser</li>
         </ul>
       </div>
+
+      <RelatedTools currentId="base64" />
     </ToolLayout>
   )
 }

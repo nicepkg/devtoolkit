@@ -1,7 +1,8 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import ToolLayout from '@/components/ToolLayout'
 import CopyButton from '@/components/CopyButton'
-import { useSeo } from '@/hooks/useSeo'
+import RelatedTools from '@/components/RelatedTools'
+import { useSeo, toolJsonLd, faqJsonLd } from '@/hooks/useSeo'
 
 interface JwtParts {
   header: Record<string, unknown>
@@ -33,7 +34,6 @@ function decodeJwt(token: string): JwtParts | { error: string } {
 
 function formatTimestamp(value: unknown): string | null {
   if (typeof value !== 'number') return null
-  // JWT timestamps are in seconds
   if (value > 1e9 && value < 2e10) {
     return new Date(value * 1000).toISOString()
   }
@@ -74,10 +74,25 @@ function JsonBlock({ title, data, color }: { title: string; data: Record<string,
 }
 
 export default function JwtDecoder() {
+  const jsonLd = useMemo(() => [
+    toolJsonLd({
+      name: 'JWT Decoder',
+      description: 'Free online JWT decoder. Inspect JSON Web Token header, payload, claims, and expiration.',
+      path: '/tools/jwt-decoder',
+      category: 'DeveloperApplication',
+    }),
+    faqJsonLd([
+      { question: 'What is a JWT (JSON Web Token)?', answer: 'JWT is an open standard (RFC 7519) for securely transmitting information between parties as a JSON object. It consists of three parts: Header, Payload, and Signature, separated by dots.' },
+      { question: 'Is it safe to decode JWT in the browser?', answer: 'Yes. JWTs are not encrypted by default — they are Base64-encoded. This tool only decodes the token, it does not verify signatures. Never trust a JWT without server-side signature verification.' },
+      { question: 'What are common JWT claims?', answer: 'Common JWT claims include: iss (issuer), sub (subject), exp (expiration time), iat (issued at), aud (audience), nbf (not before), and jti (JWT ID).' },
+    ]),
+  ], [])
+
   useSeo({
     title: 'JWT Decoder',
     description: 'Free online JWT decoder. Inspect JSON Web Token header, payload, claims, and expiration. No ads, no tracking.',
     path: '/tools/jwt-decoder',
+    jsonLd,
   })
   const [input, setInput] = useState('')
   const [result, setResult] = useState<JwtParts | { error: string }>({ error: 'Enter a JWT token' })
@@ -139,7 +154,6 @@ export default function JwtDecoder() {
             </div>
           </div>
 
-          {/* Token validation info */}
           {'exp' in result.payload && typeof result.payload.exp === 'number' && (
             <div className={`px-4 py-2 rounded text-sm ${
               result.payload.exp * 1000 < Date.now()
@@ -174,6 +188,8 @@ export default function JwtDecoder() {
           Never trust a JWT without server-side signature verification.
         </p>
       </div>
+
+      <RelatedTools currentId="jwt-decoder" />
     </ToolLayout>
   )
 }

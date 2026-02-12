@@ -48,4 +48,28 @@ export const tools: Tool[] = [
     category: 'Encoding',
     keywords: ['url', 'encode', 'decode', 'percent encoding', 'uri', 'query string'],
   },
+  {
+    id: 'uuid-generator',
+    name: 'UUID Generator',
+    description: 'Generate UUID v4 (random) and v7 (time-sortable) identifiers',
+    path: '/tools/uuid-generator',
+    category: 'Data',
+    keywords: ['uuid', 'guid', 'unique id', 'v4', 'v7', 'generate', 'random'],
+  },
+  {
+    id: 'timestamp-converter',
+    name: 'Unix Timestamp Converter',
+    description: 'Convert Unix timestamps to dates and vice versa',
+    path: '/tools/timestamp-converter',
+    category: 'Data',
+    keywords: ['unix', 'timestamp', 'epoch', 'date', 'time', 'convert', 'utc'],
+  },
+  {
+    id: 'hash-generator',
+    name: 'Hash Generator',
+    description: 'Generate MD5, SHA-1, SHA-256, SHA-384, SHA-512 hashes from text',
+    path: '/tools/hash-generator',
+    category: 'Security',
+    keywords: ['hash', 'md5', 'sha1', 'sha256', 'sha512', 'checksum', 'digest'],
+  },
 ]

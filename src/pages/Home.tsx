@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useMemo } from 'react'
 import { tools } from '@/lib/tools'
 import { useSeo } from '@/hooks/useSeo'
 
@@ -10,10 +11,24 @@ const categoryIcons: Record<string, string> = {
 }
 
 export default function Home() {
+  const jsonLd = useMemo(() => ({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'DevToolkit',
+    url: 'https://devtoolkit-dws.pages.dev',
+    description: 'Free online developer tools. JSON Formatter, Base64 Encoder/Decoder, Cron Parser, JWT Decoder, URL Encoder.',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://devtoolkit-dws.pages.dev/?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+  }), [])
+
   useSeo({
     title: 'Free Online Developer Tools',
     description: 'Free online developer tools. JSON Formatter, Base64 Encoder/Decoder, Cron Parser, JWT Decoder, URL Encoder. Fast, private, no tracking.',
     path: '/',
+    jsonLd,
   })
   return (
     <div>
@@ -55,7 +70,7 @@ export default function Home() {
           </h2>
           <p className="text-sm text-text-secondary">
             Capture website screenshots and generate PDFs via API.
-            Starting at $12/month.
+            Starting at $15/month.
           </p>
           <span className="inline-block mt-2 text-xs text-brand-400 border border-brand-500/30 rounded px-2 py-0.5">
             Coming Soon

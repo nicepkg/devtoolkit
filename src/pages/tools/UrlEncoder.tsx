@@ -1,13 +1,29 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import ToolLayout from '@/components/ToolLayout'
 import CopyButton from '@/components/CopyButton'
-import { useSeo } from '@/hooks/useSeo'
+import RelatedTools from '@/components/RelatedTools'
+import { useSeo, toolJsonLd, faqJsonLd } from '@/hooks/useSeo'
 
 export default function UrlEncoder() {
+  const jsonLd = useMemo(() => [
+    toolJsonLd({
+      name: 'URL Encoder/Decoder',
+      description: 'Free online URL encoder and decoder. Encode and decode URL components and full URIs.',
+      path: '/tools/url-encoder',
+      category: 'DeveloperApplication',
+    }),
+    faqJsonLd([
+      { question: 'What is URL encoding?', answer: 'URL encoding (percent-encoding) replaces unsafe ASCII characters with a % followed by two hexadecimal digits. It is essential for passing special characters in URLs, query parameters, and form data.' },
+      { question: 'What is the difference between encodeURI and encodeURIComponent?', answer: 'encodeURI encodes a full URI but preserves characters like :, /, ?, #, and &. encodeURIComponent encodes all special characters, making it suitable for encoding individual query parameter values.' },
+      { question: 'When should I use URL encoding?', answer: 'Use URL encoding when building URLs with user-provided input, passing special characters in query parameters, handling internationalized domain names, or encoding form data for HTTP requests.' },
+    ]),
+  ], [])
+
   useSeo({
     title: 'URL Encoder/Decoder',
     description: 'Free online URL encoder and decoder. Encode and decode URL components and full URIs. No ads, no tracking.',
     path: '/tools/url-encoder',
+    jsonLd,
   })
   const [input, setInput] = useState('')
   const [output, setOutput] = useState('')
@@ -112,7 +128,7 @@ export default function UrlEncoder() {
           onClick={swap}
           className="px-3 py-2 bg-surface-2 hover:bg-surface-3 border border-border rounded text-sm transition-colors"
         >
-          ⇄ Swap
+          Swap
         </button>
       </div>
 
@@ -180,6 +196,8 @@ export default function UrlEncoder() {
           <li>Building URLs with user-provided input</li>
         </ul>
       </div>
+
+      <RelatedTools currentId="url-encoder" />
     </ToolLayout>
   )
 }

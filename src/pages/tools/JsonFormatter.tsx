@@ -1,13 +1,29 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import ToolLayout from '@/components/ToolLayout'
 import CopyButton from '@/components/CopyButton'
-import { useSeo } from '@/hooks/useSeo'
+import RelatedTools from '@/components/RelatedTools'
+import { useSeo, toolJsonLd, faqJsonLd } from '@/hooks/useSeo'
 
 export default function JsonFormatter() {
+  const jsonLd = useMemo(() => [
+    toolJsonLd({
+      name: 'JSON Formatter & Validator',
+      description: 'Free online JSON formatter, validator, and minifier with customizable indentation.',
+      path: '/tools/json-formatter',
+      category: 'DeveloperApplication',
+    }),
+    faqJsonLd([
+      { question: 'What is JSON Formatter?', answer: 'A JSON formatter (also known as JSON beautifier or pretty printer) takes minified or compact JSON data and formats it with proper indentation and line breaks, making it easy to read and debug.' },
+      { question: 'Is this JSON Formatter free?', answer: 'Yes, completely free. No registration, no ads, no tracking. Your data never leaves your browser.' },
+      { question: 'Does it validate JSON?', answer: 'Yes, it validates JSON in real-time as you type and shows error messages for invalid JSON.' },
+    ]),
+  ], [])
+
   useSeo({
     title: 'JSON Formatter & Validator',
     description: 'Free online JSON formatter, validator, and minifier. Format, beautify, and validate JSON data with customizable indentation. No ads, no tracking.',
     path: '/tools/json-formatter',
+    jsonLd,
   })
   const [input, setInput] = useState('')
   const [output, setOutput] = useState('')
@@ -158,7 +174,16 @@ export default function JsonFormatter() {
           <li>One-click copy to clipboard</li>
           <li>100% client-side — your data never leaves your browser</li>
         </ul>
+        <h3 className="font-semibold text-text-primary">Common Use Cases</h3>
+        <ul className="list-disc list-inside space-y-1">
+          <li>Debugging API responses from REST or GraphQL endpoints</li>
+          <li>Formatting configuration files (package.json, tsconfig.json)</li>
+          <li>Validating JSON payloads before sending to an API</li>
+          <li>Minifying JSON data to reduce payload size</li>
+        </ul>
       </div>
+
+      <RelatedTools currentId="json-formatter" />
     </ToolLayout>
   )
 }

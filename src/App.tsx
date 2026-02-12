@@ -6,6 +6,9 @@ import Base64 from '@/pages/tools/Base64'
 import CronParser from '@/pages/tools/CronParser'
 import JwtDecoder from '@/pages/tools/JwtDecoder'
 import UrlEncoder from '@/pages/tools/UrlEncoder'
+import UuidGenerator from '@/pages/tools/UuidGenerator'
+import TimestampConverter from '@/pages/tools/TimestampConverter'
+import HashGenerator from '@/pages/tools/HashGenerator'
 import ApiLanding from '@/pages/ApiLanding'
 
 export default function App() {
@@ -19,6 +22,9 @@ export default function App() {
           <Route path="/tools/cron-parser" element={<CronParser />} />
           <Route path="/tools/jwt-decoder" element={<JwtDecoder />} />
           <Route path="/tools/url-encoder" element={<UrlEncoder />} />
+          <Route path="/tools/uuid-generator" element={<UuidGenerator />} />
+          <Route path="/tools/timestamp-converter" element={<TimestampConverter />} />
+          <Route path="/tools/hash-generator" element={<HashGenerator />} />
           <Route path="/api" element={<ApiLanding />} />
         </Route>
       </Routes>

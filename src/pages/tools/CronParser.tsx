@@ -1,7 +1,8 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import ToolLayout from '@/components/ToolLayout'
 import CopyButton from '@/components/CopyButton'
-import { useSeo } from '@/hooks/useSeo'
+import RelatedTools from '@/components/RelatedTools'
+import { useSeo, toolJsonLd, faqJsonLd } from '@/hooks/useSeo'
 
 const FIELD_NAMES = ['Minute', 'Hour', 'Day of Month', 'Month', 'Day of Week']
 const FIELD_RANGES = ['0-59', '0-23', '1-31', '1-12', '0-7 (0 & 7 = Sun)']
@@ -20,17 +21,12 @@ const PRESETS = [
 ]
 
 function describeField(value: string, fieldIndex: number): string {
-  if (value === '*') {
-    return `every ${FIELD_NAMES[fieldIndex].toLowerCase()}`
-  }
+  if (value === '*') return `every ${FIELD_NAMES[fieldIndex].toLowerCase()}`
   if (value.startsWith('*/')) {
     const step = value.slice(2)
     return `every ${step} ${FIELD_NAMES[fieldIndex].toLowerCase()}${Number(step) > 1 ? 's' : ''}`
   }
-  if (value.includes(',')) {
-    const parts = value.split(',').map((v) => formatValue(v.trim(), fieldIndex))
-    return parts.join(', ')
-  }
+  if (value.includes(',')) return value.split(',').map((v) => formatValue(v.trim(), fieldIndex)).join(', ')
   if (value.includes('-')) {
     const [start, end] = value.split('-')
     return `${formatValue(start, fieldIndex)} through ${formatValue(end, fieldIndex)}`
@@ -61,7 +57,6 @@ function parseCron(expression: string): { description: string; fields: { name: s
     range: FIELD_RANGES[i],
   }))
 
-  // Build human description
   const [min, hour, dom, month, dow] = parts
   let desc = 'Runs '
 
@@ -71,28 +66,37 @@ function parseCron(expression: string): { description: string; fields: { name: s
     desc += `every ${min.slice(2)} minutes`
   } else if (hour === '*') {
     desc += `at minute ${min} of every hour`
-  } else if (min.startsWith('*/') === false) {
+  } else {
     desc += `at ${hour.padStart(2, '0')}:${min.padStart(2, '0')}`
   }
 
-  if (dom !== '*') {
-    desc += ` on day ${dom} of the month`
-  }
-  if (month !== '*') {
-    desc += ` in ${describeField(month, 3)}`
-  }
-  if (dow !== '*') {
-    desc += ` on ${describeField(dow, 4)}`
-  }
+  if (dom !== '*') desc += ` on day ${dom} of the month`
+  if (month !== '*') desc += ` in ${describeField(month, 3)}`
+  if (dow !== '*') desc += ` on ${describeField(dow, 4)}`
 
   return { description: desc, fields }
 }
 
 export default function CronParser() {
+  const jsonLd = useMemo(() => [
+    toolJsonLd({
+      name: 'Cron Expression Parser',
+      description: 'Free online cron expression parser and explainer with human-readable descriptions.',
+      path: '/tools/cron-parser',
+      category: 'DeveloperApplication',
+    }),
+    faqJsonLd([
+      { question: 'What is a cron expression?', answer: 'A cron expression is a string of five fields separated by spaces that represents a schedule. It is used in Unix-like systems (crontab), CI/CD pipelines, and task schedulers to define when a job should run.' },
+      { question: 'What does * mean in cron?', answer: 'The asterisk (*) in a cron expression means "every" or "any value". For example, * in the minute field means every minute.' },
+      { question: 'What is the format of a cron expression?', answer: 'The standard cron format is: minute (0-59) hour (0-23) day-of-month (1-31) month (1-12) day-of-week (0-7, where 0 and 7 are Sunday).' },
+    ]),
+  ], [])
+
   useSeo({
     title: 'Cron Expression Parser',
     description: 'Free online cron expression parser and explainer. Understand cron syntax with human-readable descriptions and preset examples. No ads, no tracking.',
     path: '/tools/cron-parser',
+    jsonLd,
   })
   const [input, setInput] = useState('0 9 * * 1-5')
   const [result, setResult] = useState(() => parseCron('0 9 * * 1-5'))
@@ -109,7 +113,6 @@ export default function CronParser() {
       title="Cron Expression Parser"
       description="Parse cron expressions and see human-readable explanations."
     >
-      {/* Input */}
       <div className="mb-6">
         <div className="flex items-center gap-3 mb-3">
           <input
@@ -122,8 +125,6 @@ export default function CronParser() {
           />
           {descriptionText && <CopyButton text={descriptionText} />}
         </div>
-
-        {/* Field labels */}
         <div className="flex gap-0 text-xs text-text-muted font-mono max-w-md">
           {FIELD_NAMES.map((name, i) => (
             <div key={i} className="flex-1 text-center">
@@ -133,7 +134,6 @@ export default function CronParser() {
         </div>
       </div>
 
-      {/* Presets */}
       <div className="mb-6">
         <label className="text-sm text-text-secondary mb-2 block">Presets:</label>
         <div className="flex flex-wrap gap-2">
@@ -153,7 +153,6 @@ export default function CronParser() {
         </div>
       </div>
 
-      {/* Result */}
       {'error' in result ? (
         <div className="px-4 py-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
           {result.error}
@@ -215,6 +214,8 @@ export default function CronParser() {
           <li><code className="bg-surface-2 px-1 rounded">/</code> — step values (*/5 = every 5)</li>
         </ul>
       </div>
+
+      <RelatedTools currentId="cron-parser" />
     </ToolLayout>
   )
 }
