@@ -20,6 +20,8 @@ const ROUTES = [
   '/tools/uuid-generator',
   '/tools/timestamp-converter',
   '/tools/hash-generator',
+  '/tools/password-generator',
+  '/tools/diff-checker',
   '/api',
 ]
 

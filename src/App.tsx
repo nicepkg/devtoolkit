@@ -9,6 +9,8 @@ import UrlEncoder from '@/pages/tools/UrlEncoder'
 import UuidGenerator from '@/pages/tools/UuidGenerator'
 import TimestampConverter from '@/pages/tools/TimestampConverter'
 import HashGenerator from '@/pages/tools/HashGenerator'
+import PasswordGenerator from '@/pages/tools/PasswordGenerator'
+import DiffChecker from '@/pages/tools/DiffChecker'
 import ApiLanding from '@/pages/ApiLanding'
 
 export default function App() {
@@ -25,6 +27,8 @@ export default function App() {
           <Route path="/tools/uuid-generator" element={<UuidGenerator />} />
           <Route path="/tools/timestamp-converter" element={<TimestampConverter />} />
           <Route path="/tools/hash-generator" element={<HashGenerator />} />
+          <Route path="/tools/password-generator" element={<PasswordGenerator />} />
+          <Route path="/tools/diff-checker" element={<DiffChecker />} />
           <Route path="/api" element={<ApiLanding />} />
         </Route>
       </Routes>

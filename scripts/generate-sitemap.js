@@ -17,6 +17,8 @@ const pages = [
   { path: '/tools/uuid-generator', priority: '0.9', changefreq: 'monthly' },
   { path: '/tools/timestamp-converter', priority: '0.9', changefreq: 'monthly' },
   { path: '/tools/hash-generator', priority: '0.9', changefreq: 'monthly' },
+  { path: '/tools/password-generator', priority: '0.9', changefreq: 'monthly' },
+  { path: '/tools/diff-checker', priority: '0.9', changefreq: 'monthly' },
   { path: '/api', priority: '0.8', changefreq: 'weekly' },
 ]
 

@@ -72,4 +72,20 @@ export const tools: Tool[] = [
     category: 'Security',
     keywords: ['hash', 'md5', 'sha1', 'sha256', 'sha512', 'checksum', 'digest'],
   },
+  {
+    id: 'password-generator',
+    name: 'Password Generator',
+    description: 'Generate strong random passwords and XKCD-style memorable passphrases',
+    path: '/tools/password-generator',
+    category: 'Security',
+    keywords: ['password', 'passphrase', 'xkcd', 'random', 'strong', 'generate', 'secure'],
+  },
+  {
+    id: 'diff-checker',
+    name: 'Text Diff Checker',
+    description: 'Compare two texts and find differences line by line',
+    path: '/tools/diff-checker',
+    category: 'Data',
+    keywords: ['diff', 'compare', 'difference', 'text', 'merge', 'patch', 'changes'],
+  },
 ]
