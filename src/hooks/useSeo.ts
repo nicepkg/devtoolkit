@@ -18,6 +18,11 @@ export function useSeo({ title, description, path = '', jsonLd }: SeoProps) {
     const fullTitle = `${title} — ${SITE_NAME}`
     document.title = fullTitle
 
+    // Cloudflare Pages serves directory routes with trailing slash (308 redirect).
+    // Canonical/OG URLs must match the final URL to avoid redirect-canonical mismatch.
+    const canonicalPath = path === '/' || path === '' ? '/' : `${path}/`
+    const pageUrl = `${BASE_URL}${canonicalPath}`
+
     // Meta description
     let metaDesc = document.querySelector('meta[name="description"]')
     if (!metaDesc) {
@@ -34,13 +39,13 @@ export function useSeo({ title, description, path = '', jsonLd }: SeoProps) {
       canonical.setAttribute('rel', 'canonical')
       document.head.appendChild(canonical)
     }
-    canonical.setAttribute('href', `${BASE_URL}${path}`)
+    canonical.setAttribute('href', pageUrl)
 
     // OG tags
     const ogTags: Record<string, string> = {
       'og:title': fullTitle,
       'og:description': description,
-      'og:url': `${BASE_URL}${path}`,
+      'og:url': pageUrl,
     }
     for (const [property, content] of Object.entries(ogTags)) {
       let meta = document.querySelector(`meta[property="${property}"]`)
@@ -82,7 +87,7 @@ export function toolJsonLd(opts: {
     '@type': 'WebApplication',
     name: opts.name,
     description: opts.description,
-    url: `${BASE_URL}${opts.path}`,
+    url: `${BASE_URL}${opts.path}/`,
     applicationCategory: opts.category,
     operatingSystem: 'Any',
     offers: {

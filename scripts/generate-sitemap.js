@@ -26,12 +26,16 @@ const pages = [
 
 const today = new Date().toISOString().split('T')[0]
 
+// Cloudflare Pages serves directory routes with trailing slash (308 redirect).
+// Sitemap URLs must match the final URL that actually serves content.
+const trailingSlash = (p) => (p === '/' ? p : `${p}/`)
+
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${pages
   .map(
     (page) => `  <url>
-    <loc>${BASE_URL}${page.path}</loc>
+    <loc>${BASE_URL}${trailingSlash(page.path)}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>${page.changefreq}</changefreq>
     <priority>${page.priority}</priority>

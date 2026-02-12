@@ -80,7 +80,9 @@ async function prerender() {
     // Wait for React to finish rendering
     await page.waitForSelector('#root > *', { timeout: 10000 })
     // Wait for useSeo() hook to update canonical URL to the correct route path
-    const expectedCanonical = `${BASE_URL}${route}`
+    // Canonical URLs use trailing slash to match Cloudflare Pages behavior
+    const canonicalPath = route === '/' ? '/' : `${route}/`
+    const expectedCanonical = `${BASE_URL}${canonicalPath}`
     await page.waitForFunction(
       (expected) => {
         const link = document.querySelector('link[rel="canonical"]')
