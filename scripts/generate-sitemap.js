@@ -19,6 +19,8 @@ const pages = [
   { path: '/tools/hash-generator', priority: '0.9', changefreq: 'monthly' },
   { path: '/tools/password-generator', priority: '0.9', changefreq: 'monthly' },
   { path: '/tools/diff-checker', priority: '0.9', changefreq: 'monthly' },
+  { path: '/tools/regex-tester', priority: '0.9', changefreq: 'monthly' },
+  { path: '/tools/color-converter', priority: '0.9', changefreq: 'monthly' },
   { path: '/api', priority: '0.8', changefreq: 'weekly' },
 ]
 

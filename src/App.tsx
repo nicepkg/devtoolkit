@@ -11,6 +11,8 @@ import TimestampConverter from '@/pages/tools/TimestampConverter'
 import HashGenerator from '@/pages/tools/HashGenerator'
 import PasswordGenerator from '@/pages/tools/PasswordGenerator'
 import DiffChecker from '@/pages/tools/DiffChecker'
+import RegexTester from '@/pages/tools/RegexTester'
+import ColorConverter from '@/pages/tools/ColorConverter'
 import ApiLanding from '@/pages/ApiLanding'
 
 export default function App() {
@@ -29,6 +31,8 @@ export default function App() {
           <Route path="/tools/hash-generator" element={<HashGenerator />} />
           <Route path="/tools/password-generator" element={<PasswordGenerator />} />
           <Route path="/tools/diff-checker" element={<DiffChecker />} />
+          <Route path="/tools/regex-tester" element={<RegexTester />} />
+          <Route path="/tools/color-converter" element={<ColorConverter />} />
           <Route path="/api" element={<ApiLanding />} />
         </Route>
       </Routes>

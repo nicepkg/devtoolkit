@@ -88,4 +88,20 @@ export const tools: Tool[] = [
     category: 'Data',
     keywords: ['diff', 'compare', 'difference', 'text', 'merge', 'patch', 'changes'],
   },
+  {
+    id: 'regex-tester',
+    name: 'Regex Tester',
+    description: 'Test and debug regular expressions with real-time matching and highlighting',
+    path: '/tools/regex-tester',
+    category: 'Data',
+    keywords: ['regex', 'regular expression', 'test', 'match', 'pattern', 'validate', 'regexp'],
+  },
+  {
+    id: 'color-converter',
+    name: 'Color Converter',
+    description: 'Convert colors between HEX, RGB, and HSL with contrast checker',
+    path: '/tools/color-converter',
+    category: 'Encoding',
+    keywords: ['color', 'hex', 'rgb', 'hsl', 'convert', 'picker', 'contrast', 'wcag'],
+  },
 ]

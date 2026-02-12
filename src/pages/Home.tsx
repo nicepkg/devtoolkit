@@ -16,7 +16,7 @@ export default function Home() {
     '@type': 'WebSite',
     name: 'DevToolkit',
     url: 'https://devtoolkit-dws.pages.dev',
-    description: 'Free online developer tools. JSON Formatter, Base64 Encoder/Decoder, Cron Parser, JWT Decoder, URL Encoder.',
+    description: 'Free online developer tools. JSON Formatter, Regex Tester, Color Converter, Base64, UUID Generator, and more.',
     potentialAction: {
       '@type': 'SearchAction',
       target: 'https://devtoolkit-dws.pages.dev/?q={search_term_string}',
@@ -26,7 +26,7 @@ export default function Home() {
 
   useSeo({
     title: 'Free Online Developer Tools',
-    description: 'Free online developer tools. JSON Formatter, Base64, UUID Generator, Password Generator, Diff Checker, Hash Generator, and more. Fast, private, no tracking.',
+    description: 'Free online developer tools: JSON Formatter, Regex Tester, Color Converter, Base64, UUID Generator, Password Generator, Diff Checker, Hash Generator, and more. Fast, private, no tracking.',
     path: '/',
     jsonLd,
   })

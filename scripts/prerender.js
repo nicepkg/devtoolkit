@@ -22,6 +22,8 @@ const ROUTES = [
   '/tools/hash-generator',
   '/tools/password-generator',
   '/tools/diff-checker',
+  '/tools/regex-tester',
+  '/tools/color-converter',
   '/api',
 ]
 
