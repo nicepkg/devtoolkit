@@ -15,12 +15,18 @@ export default function RelatedTools({ currentId }: RelatedToolsProps) {
           <Link
             key={tool.id}
             to={tool.path}
-            className="flex items-center gap-3 p-3 rounded-lg border border-border bg-surface-1 hover:border-brand-500/40 hover:bg-surface-2 transition-all"
+            className="group flex items-center gap-4 p-4 rounded-xl border border-border bg-surface-1 hover:border-brand-500/40 hover:shadow-md hover:shadow-brand-500/5 hover:-translate-y-0.5 transition-all duration-200"
           >
-            <span className="text-brand-400 font-mono text-xs">{tool.category}</span>
-            <div>
-              <span className="text-sm font-medium">{tool.name}</span>
-              <span className="text-xs text-text-muted ml-2">{tool.description}</span>
+            <span className="shrink-0 text-xs font-medium text-brand-400 bg-brand-500/10 px-2 py-0.5 rounded-full">
+              {tool.category}
+            </span>
+            <div className="min-w-0">
+              <span className="text-sm font-medium group-hover:text-brand-400 transition-colors">
+                {tool.name}
+              </span>
+              <span className="text-xs text-text-muted ml-2 hidden sm:inline">
+                {tool.description}
+              </span>
             </div>
           </Link>
         ))}
