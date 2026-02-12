@@ -10,6 +10,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const DIST = resolve(__dirname, '../dist')
 const PORT = 4173
 
+const BASE_URL = 'https://devtoolkit-dws.pages.dev'
+
 const ROUTES = [
   '/',
   '/tools/json-formatter',
@@ -26,6 +28,9 @@ const ROUTES = [
   '/tools/color-converter',
   '/api',
 ]
+
+// Routes that have JSON-LD structured data (those passing jsonLd to useSeo)
+const ROUTES_WITH_JSONLD = new Set(ROUTES.filter((r) => r !== '/api'))
 
 // Simple static file server that handles SPA fallback
 function startServer() {
@@ -72,8 +77,22 @@ async function prerender() {
     console.log(`  Rendering: ${route}`)
 
     await page.goto(url, { waitUntil: 'networkidle0', timeout: 15000 })
-    // Wait a bit for React to finish rendering
+    // Wait for React to finish rendering
     await page.waitForSelector('#root > *', { timeout: 10000 })
+    // Wait for useSeo() hook to update canonical URL to the correct route path
+    const expectedCanonical = `${BASE_URL}${route}`
+    await page.waitForFunction(
+      (expected) => {
+        const link = document.querySelector('link[rel="canonical"]')
+        return link && link.getAttribute('href') === expected
+      },
+      { timeout: 10000 },
+      expectedCanonical,
+    )
+    // Wait for JSON-LD if this route has structured data
+    if (ROUTES_WITH_JSONLD.has(route)) {
+      await page.waitForSelector('script[data-seo-jsonld]', { timeout: 10000 })
+    }
 
     let html = await page.content()
 
